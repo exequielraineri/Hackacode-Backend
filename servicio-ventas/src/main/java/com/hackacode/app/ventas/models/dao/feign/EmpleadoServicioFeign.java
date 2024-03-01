@@ -4,10 +4,18 @@
  */
 package com.hackacode.app.ventas.models.dao.feign;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 /**
  *
  * @author 54385
  */
-public class EmpleadoServicioFeign {
-    
+@FeignClient(name = "servicio-empleados")
+public interface EmpleadoServicioFeign {
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerEmpleado(@PathVariable Long id);
 }

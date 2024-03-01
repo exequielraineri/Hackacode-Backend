@@ -49,5 +49,5 @@ public class Servicio {
     private List<PackTuristico> pack;
 
     private String imagen;
-   
+
 }

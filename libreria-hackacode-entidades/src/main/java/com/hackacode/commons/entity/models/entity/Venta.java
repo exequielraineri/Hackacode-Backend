@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,10 +30,10 @@ public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaVenta;
-    
+
     @Enumerated(EnumType.STRING)
     private MedioPago medioPago;
 
@@ -51,10 +53,38 @@ public class Venta {
     @Temporal(TemporalType.DATE)
     private Date fechaRegistro;
 
-    /*public String getTipoServicio() {
-        if (producto. > 1) {
-            return "Paquete";
+    @Column(name = "importe")
+    private BigDecimal importe;
+
+    public BigDecimal getImporte() {
+        if (importe == null) {
+            importe = BigDecimal.ZERO;
         }
-        return "Normal";
-    }*/
+        BigDecimal comision = BigDecimal.ZERO;
+        switch (medioPago) {
+            case Debito: {
+                //3%
+                comision = new BigDecimal(0.03);
+                break;
+            }
+            case Credito: {
+                //9%
+                comision = new BigDecimal(0.09);
+                break;
+            }
+            case Transferencia: {
+                //2,45%
+                comision = new BigDecimal(0.0245);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        //multiplico por la comision y redondeo para arriba con 2 decimales
+        comision = importe.multiply(comision).setScale(2, RoundingMode.HALF_UP);
+
+        return importe.add(comision);
+    }
+
 }

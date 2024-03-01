@@ -1,7 +1,5 @@
 package com.hackacode.app.clientes.controllers;
 
-import com.google.common.collect.HashBasedTable;
-import com.hackacode.app.clientes.models.dao.ClienteDao;
 import com.hackacode.commons.entity.models.entity.dto.ClienteDTO;
 import com.hackacode.commons.entity.util.InterfazServicio;
 import java.util.HashMap;

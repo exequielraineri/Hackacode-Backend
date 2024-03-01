@@ -1,11 +1,11 @@
 package com.hackacode.commons.entity.models.entity.dto;
 
 import com.hackacode.commons.entity.util.MedioPago;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 public class VentaDTO {
 
@@ -16,8 +16,9 @@ public class VentaDTO {
     private EmpleadoDTO empleado;
     private PackTuristicoDTO producto;
     private Date fechaRegistro;
+    private BigDecimal importe;
 
-    public VentaDTO(Long id, Date fechaVenta, MedioPago medioPago, ClienteDTO cliente, EmpleadoDTO empleado, PackTuristicoDTO producto, Date fechaRegistro) {
+    public VentaDTO(Long id, Date fechaVenta, MedioPago medioPago, ClienteDTO cliente, EmpleadoDTO empleado, PackTuristicoDTO producto, Date fechaRegistro, BigDecimal importe) {
         this.id = id;
         this.fechaVenta = fechaVenta;
         this.medioPago = medioPago;
@@ -25,6 +26,15 @@ public class VentaDTO {
         this.empleado = empleado;
         this.producto = producto;
         this.fechaRegistro = fechaRegistro;
+        this.importe = importe;
+    }
+
+    public BigDecimal getImporte() {
+        return importe;
+    }
+
+    public void setImporte(BigDecimal importe) {
+        this.importe = importe;
     }
 
     public VentaDTO() {
@@ -85,14 +95,12 @@ public class VentaDTO {
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
-    
-    public String getTipoProducto(){
-         if (producto.getServicios().size() > 1) {
+
+    public String getTipoProducto() {
+        if (producto.getServicios().size() > 1) {
             return "Paquete";
         }
         return "Normal";
     }
-    
-    
-    
+
 }
