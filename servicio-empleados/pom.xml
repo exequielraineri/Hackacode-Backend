@@ -73,6 +73,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <finalName>servicio-empleados</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

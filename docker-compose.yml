@@ -1,0 +1,92 @@
+version: '2.1'
+
+services:
+  mysql_hackathon:
+    image: mysql:latest
+    restart: always
+    container_name: mysqlbd_hackathon
+    environment:
+      - MYSQL_DATABASE=hackathon_bd
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/Documents/vol:/var/lib/mysql
+    networks:
+      - red_hackathon
+  libreria-commons:
+    build: libreria-hackacode-entidades/
+  servicio-eureka:
+    build: servicio-eureka-server/
+    ports:
+      - 8761:8761
+    networks:
+      - red_hackathon
+  servicio-clientes:
+    build: servicio-clientes/
+    ports:
+      - 8081:8080
+    networks:
+      - red_hackathon
+    depends_on:
+      - mysql_hackathon
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlbd_hackathon:3306/hackathon_bd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+  servicio-empleados:
+    build: servicio-empleados/
+    ports:
+      - 8082:8080
+    networks:
+      - red_hackathon
+    depends_on:
+      - mysql_hackathon
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlbd_hackathon:3306/hackathon_bd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+  servicio-servicios-turisticos:
+    build: servicio-servicios-turisticos/
+    ports:
+      - 8084:8080
+    networks:
+      - red_hackathon
+    depends_on:
+      - mysql_hackathon
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlbd_hackathon:3306/hackathon_bd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+  servicio-paquetes:
+    build: servicio-pack-turisticos/
+    ports:
+      - 8085:8080
+    networks:
+      - red_hackathon
+    depends_on:
+      - mysql_hackathon
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlbd_hackathon:3306/hackathon_bd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+  servicio-ventas:
+    build: servicio-ventas/
+    ports:
+      - 8083:8080
+    networks:
+      - red_hackathon
+    depends_on:
+      - mysql_hackathon
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlbd_hackathon:3306/hackathon_bd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+  servicio-gateway:
+    build: servicio-gateway/
+    ports:
+      - 9090:9090
+    networks:
+      - red_hackathon
+networks:
+  red_hackathon:

@@ -81,6 +81,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <finalName>servicio-ventas</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

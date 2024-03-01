@@ -76,6 +76,7 @@
 		</dependencies>
 	</dependencyManagement>
     <build>
+        <finalName>servicio-servicios-turisticos</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
