@@ -76,8 +76,18 @@ public class EmpleadoController {
                 response.put("mensaje", "El empleado no existe en la base de datos");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            empleadoBD_DTO = empleadoDTO;
             empleadoBD_DTO.setId(id);
+            empleadoBD_DTO.setApellido(empleadoDTO.getApellido());
+            empleadoBD_DTO.setCelular(empleadoDTO.getCelular());
+            empleadoBD_DTO.setDireccion(empleadoDTO.getDireccion());
+            empleadoBD_DTO.setDni(empleadoDTO.getDni());
+            empleadoBD_DTO.setEmail(empleadoDTO.getEmail());
+            empleadoBD_DTO.setFechaNac(empleadoDTO.getFechaNac());
+            empleadoBD_DTO.setFechaRegistro(empleadoDTO.getFechaRegistro());
+            empleadoBD_DTO.setNacionalidad(empleadoDTO.getNacionalidad());
+            empleadoBD_DTO.setNombre(empleadoDTO.getNombre());
+            empleadoBD_DTO.setCargo(empleadoDTO.getCargo());
+            empleadoBD_DTO.setSueldo(empleadoDTO.getSueldo());
             return new ResponseEntity<>(empleadoServicio.guardar(empleadoBD_DTO), HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
             response.put("mensaje", "Existen elementos unicos que no pueden duplicarse");

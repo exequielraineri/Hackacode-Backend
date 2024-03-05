@@ -92,7 +92,6 @@ public class VentaController {
         ventaDTO.setFechaVenta(new Date());
         ventaDTO.setMedioPago(MedioPago.valueOf(medioPago));
         ventaDTO.setProducto(producto);
-        ventaDTO.setImporte(BigDecimal.valueOf(producto.getCostoPack()));
         return new ResponseEntity<>(ventaServicio.guardar(ventaDTO), HttpStatus.CREATED);
     }
     

@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ClienteController {
-
+    
     @Autowired
     private InterfazServicio<ClienteDTO> clienteServicio;
-
+    
     @GetMapping("/")
     public List<ClienteDTO> listar() {
         return clienteServicio.listar();
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<?> obtener(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
@@ -45,9 +45,9 @@ public class ClienteController {
             response.put("causa", e.getCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
-
+        
     }
-
+    
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> crear(@RequestBody ClienteDTO clienteDto) {
@@ -59,35 +59,44 @@ public class ClienteController {
             response.put("causa", e.getCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
-
+        
     }
-
+    
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable("id") Long id) {
         clienteServicio.eliminarPorId(id);
     }
-
+    
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> editar(@RequestBody ClienteDTO clienteDto, @PathVariable("id") Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
             ClienteDTO clienteBD_DTO = clienteServicio.buscarPorId(id);
-
+            
             if (clienteBD_DTO == null) {
                 response.put("mensaje", "El cliente no existe en la base de datos");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            clienteBD_DTO = clienteDto;
             clienteBD_DTO.setId(id);
+            clienteBD_DTO.setApellido(clienteDto.getApellido());
+            clienteBD_DTO.setCelular(clienteDto.getCelular());
+            clienteBD_DTO.setDireccion(clienteDto.getDireccion());
+            clienteBD_DTO.setDni(clienteDto.getDni());
+            clienteBD_DTO.setEmail(clienteDto.getEmail());
+            clienteBD_DTO.setFechaNac(clienteDto.getFechaNac());
+            clienteBD_DTO.setFechaRegistro(clienteDto.getFechaRegistro());
+            clienteBD_DTO.setNacionalidad(clienteDto.getNacionalidad());
+            clienteBD_DTO.setNombre(clienteDto.getNombre());
+            
             return new ResponseEntity<>(clienteServicio.guardar(clienteBD_DTO), HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
-
+            
             response.put("mensaje", "Existen elementos unicos que no pueden duplicarse");
             response.put("causa", e.getCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
     }
-
+    
 }
