@@ -9,18 +9,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
-
+    
     @Autowired
     private IEmpleadoDao empleadoDao;
-
+    
     @Autowired
     private ModelMapper modelMapper;
-
+    
     @Override
     @Transactional(readOnly = true)
     public List<EmpleadoDTO> listar() {
@@ -28,10 +30,10 @@ public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
         List<EmpleadoDTO> empleadosDTO = empleados.stream()
                 .map(empleado -> modelMapper.map(empleado, EmpleadoDTO.class))
                 .collect(Collectors.toList());
-
+        
         return empleadosDTO;
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public EmpleadoDTO buscarPorId(Long id) {
@@ -41,7 +43,7 @@ public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
         }
         return modelMapper.map(empleadoDB, EmpleadoDTO.class);
     }
-
+    
     @Override
     @Transactional
     public EmpleadoDTO guardar(EmpleadoDTO empleadoDTO) {
@@ -50,11 +52,11 @@ public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
         empleado = empleadoDao.save(empleado);
         return modelMapper.map(empleado, EmpleadoDTO.class);
     }
-
+    
     @Override
     @Transactional
     public void eliminarPorId(Long id) {
         empleadoDao.deleteById(id);
     }
-
+    
 }
