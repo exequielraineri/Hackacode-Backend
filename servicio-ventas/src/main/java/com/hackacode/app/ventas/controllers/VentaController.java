@@ -2,11 +2,7 @@ package com.hackacode.app.ventas.controllers;
 
 import com.hackacode.app.ventas.models.dao.feign.ClienteServicioFeign;
 import com.hackacode.app.ventas.models.dao.feign.EmpleadoServicioFeign;
-<<<<<<< HEAD
-import com.hackacode.app.ventas.models.service.IVentaServicio;
-=======
 import com.hackacode.app.ventas.models.service.IVentaService;
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
 import com.hackacode.commons.entity.models.entity.dto.ClienteDTO;
 import com.hackacode.commons.entity.models.entity.dto.EmpleadoDTO;
 import com.hackacode.commons.entity.models.entity.dto.PackTuristicoDTO;
@@ -34,13 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class VentaController {
 
     @Autowired
-<<<<<<< HEAD
-    private IVentaServicio ventaServicio;
-    
-=======
     private IVentaService ventaServicio;
-
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
+    
     @Autowired
     private ClienteServicioFeign clienteFeign;
 

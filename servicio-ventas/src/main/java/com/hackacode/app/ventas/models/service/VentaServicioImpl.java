@@ -11,11 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-<<<<<<< HEAD
-public class VentaServicioImpl implements IVentaServicio {
-=======
 public class VentaServicioImpl implements IVentaService {
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
 
     @Autowired
     private IVentaDao ventaDao;
@@ -58,21 +54,14 @@ public class VentaServicioImpl implements IVentaService {
         ventaDao.deleteById(id);
     }
 
-<<<<<<< HEAD
-   
-=======
     @Override
     public List<VentaDTO> ventasPorIdEmpleado(Long idEmpleado) {
 
         List<Venta> ventas = ventaDao.ventasPorIdEmpleado(idEmpleado);
-        List<VentaDTO> ventasDto=ventas.stream()
+        List<VentaDTO> ventasDto = ventas.stream()
                 .map(venta -> modelMapper.map(venta, VentaDTO.class))
                 .collect(Collectors.toList());
         return ventasDto;
     }
 
-    
-    
-    
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
 }
