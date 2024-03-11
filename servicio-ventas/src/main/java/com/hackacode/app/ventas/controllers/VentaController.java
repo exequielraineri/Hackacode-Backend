@@ -2,7 +2,11 @@ package com.hackacode.app.ventas.controllers;
 
 import com.hackacode.app.ventas.models.dao.feign.ClienteServicioFeign;
 import com.hackacode.app.ventas.models.dao.feign.EmpleadoServicioFeign;
+<<<<<<< HEAD
 import com.hackacode.app.ventas.models.service.IVentaServicio;
+=======
+import com.hackacode.app.ventas.models.service.IVentaService;
+>>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
 import com.hackacode.commons.entity.models.entity.dto.ClienteDTO;
 import com.hackacode.commons.entity.models.entity.dto.EmpleadoDTO;
 import com.hackacode.commons.entity.models.entity.dto.PackTuristicoDTO;
@@ -28,29 +32,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class VentaController {
-    
+
     @Autowired
+<<<<<<< HEAD
     private IVentaServicio ventaServicio;
     
+=======
+    private IVentaService ventaServicio;
+
+>>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
     @Autowired
     private ClienteServicioFeign clienteFeign;
-    
+
     @Autowired
     private EmpleadoServicioFeign empleadoFeign;
-    
+
     @Autowired
     private ModelMapper modelMapper;
-    
+
     @GetMapping("/")
     public List<VentaDTO> listar() {
         return ventaServicio.listar();
     }
-    
+
     @GetMapping("/{id}")
     public VentaDTO obtener(@PathVariable Long id) {
         return ventaServicio.buscarPorId(id);
     }
-    
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> crear(@RequestBody PackTuristicoDTO producto,
@@ -76,14 +85,14 @@ public class VentaController {
                 return new ResponseEntity<>(responseMapBody, HttpStatus.NOT_FOUND);
             }
         }
-        
+
         if (responseEmpleadoFeign.getStatusCode().is2xxSuccessful()) {
             Map<String, Object> mapEmpleado = (Map<String, Object>) responseEmpleadoFeign.getBody();
             empleadoDTO = modelMapper.map(mapEmpleado, EmpleadoDTO.class);
         } else {
             return new ResponseEntity<>(responseEmpleadoFeign, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
         VentaDTO ventaDTO = new VentaDTO();
         ventaDTO.setFechaRegistro(new Date());
         ventaDTO.setCliente(clienteDTO);
@@ -94,23 +103,38 @@ public class VentaController {
         ventaDTO.setImporte(BigDecimal.valueOf(producto.getCostoPack()));
         return new ResponseEntity<>(ventaServicio.guardar(ventaDTO), HttpStatus.CREATED);
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) {
         ventaServicio.eliminarPorId(id);
     }
-    
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VentaDTO> editar(@RequestBody VentaDTO ventaDTO, @PathVariable Long id) {
         VentaDTO ventaBD_DTO = ventaServicio.buscarPorId(id);
-        
+
         if (ventaBD_DTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ventaServicio.guardar(ventaBD_DTO), HttpStatus.OK);
-        
+
     }
-    
+
+    @GetMapping("/empleado/{idEmpleado}")
+    public ResponseEntity<?> ventasPorEmpleado(@PathVariable Long idEmpleado) {
+        ResponseEntity<?> responseEmpleado = empleadoFeign.obtenerEmpleado(idEmpleado);
+        EmpleadoDTO empleadoDTO;
+        if (responseEmpleado.getStatusCode().is2xxSuccessful()) {
+            Map<String, Object> mapResponseBody = (Map<String, Object>) responseEmpleado.getBody();
+            empleadoDTO = modelMapper.map(mapResponseBody, EmpleadoDTO.class);
+        } else {
+            return new ResponseEntity<>(responseEmpleado, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        List<VentaDTO> ventasDTO = ventaServicio.ventasPorIdEmpleado(idEmpleado);
+        return new ResponseEntity<>(ventasDTO, HttpStatus.OK);
+
+    }
 }

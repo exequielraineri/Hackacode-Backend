@@ -39,7 +39,13 @@ public class Cliente {
     
     private String direccion;
 
+<<<<<<< HEAD
     @Column(nullable = false, unique = true)
+=======
+    private String direccion;
+    
+    @Column(nullable = false)
+>>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
     private String dni;
 
     @Column(name = "fecha_nac")

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,6 @@ public class EmpleadoController {
 
     @Autowired
     private InterfazServicio<EmpleadoDTO> empleadoServicio;
-
     @GetMapping("/")
     public List<EmpleadoDTO> listar() {
         return empleadoServicio.listar();
@@ -88,6 +88,7 @@ public class EmpleadoController {
             empleadoBD_DTO.setNombre(empleadoDTO.getNombre());
             empleadoBD_DTO.setCargo(empleadoDTO.getCargo());
             empleadoBD_DTO.setSueldo(empleadoDTO.getSueldo());
+            empleadoBD_DTO.setPassword(empleadoDTO.getPassword());
             return new ResponseEntity<>(empleadoServicio.guardar(empleadoBD_DTO), HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
             response.put("mensaje", "Existen elementos unicos que no pueden duplicarse");
