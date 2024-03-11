@@ -12,13 +12,9 @@ public class Empleado extends Cliente {
     @Column(nullable = false)
     private String cargo;
     private Double sueldo;
-<<<<<<< HEAD
 
-    public Empleado(String cargo, Double sueldo, Long id, String nombre, String apellido, String direccion, String dni, Date fechaNac, String nacionalidad, Long celular, String email, Date fechaRegistro) {
-=======
     private String password;
     public Empleado(String cargo, Double sueldo, Long id, String nombre, String apellido, String direccion,String password, String dni, Date fechaNac, String nacionalidad, Long celular, String email, Date fechaRegistro) {
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
         super(id, nombre, apellido, direccion, dni, fechaNac, nacionalidad, celular, email, fechaRegistro);
         this.cargo = cargo;
         this.sueldo = sueldo;

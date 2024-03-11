@@ -1,10 +1,6 @@
 package com.hackacode.commons.entity.models.entity.dto;
 
-<<<<<<< HEAD
-=======
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
->>>>>>> 1bdf1cf2e09ca2136e98a62efb158ad2fe3a3417
 import java.util.List;
 
 
