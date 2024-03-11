@@ -3,7 +3,6 @@ package com.hackacode.app.ventas.models.service;
 import com.hackacode.app.ventas.models.dao.IVentaDao;
 import com.hackacode.commons.entity.models.entity.Venta;
 import com.hackacode.commons.entity.models.entity.dto.VentaDTO;
-import com.hackacode.commons.entity.util.InterfazServicio;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class VentaServicioImpl implements InterfazServicio<VentaDTO> {
+public class VentaServicioImpl implements IVentaServicio {
 
     @Autowired
     private IVentaDao ventaDao;
@@ -55,4 +54,5 @@ public class VentaServicioImpl implements InterfazServicio<VentaDTO> {
         ventaDao.deleteById(id);
     }
 
+   
 }

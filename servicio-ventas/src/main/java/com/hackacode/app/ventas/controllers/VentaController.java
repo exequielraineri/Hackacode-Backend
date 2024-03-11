@@ -2,12 +2,11 @@ package com.hackacode.app.ventas.controllers;
 
 import com.hackacode.app.ventas.models.dao.feign.ClienteServicioFeign;
 import com.hackacode.app.ventas.models.dao.feign.EmpleadoServicioFeign;
+import com.hackacode.app.ventas.models.service.IVentaServicio;
 import com.hackacode.commons.entity.models.entity.dto.ClienteDTO;
 import com.hackacode.commons.entity.models.entity.dto.EmpleadoDTO;
 import com.hackacode.commons.entity.models.entity.dto.PackTuristicoDTO;
-import com.hackacode.commons.entity.models.entity.dto.ServicioDTO;
 import com.hackacode.commons.entity.models.entity.dto.VentaDTO;
-import com.hackacode.commons.entity.util.InterfazServicio;
 import com.hackacode.commons.entity.util.MedioPago;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -31,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VentaController {
     
     @Autowired
-    private InterfazServicio<VentaDTO> ventaServicio;
+    private IVentaServicio ventaServicio;
     
     @Autowired
     private ClienteServicioFeign clienteFeign;
@@ -92,6 +91,7 @@ public class VentaController {
         ventaDTO.setFechaVenta(new Date());
         ventaDTO.setMedioPago(MedioPago.valueOf(medioPago));
         ventaDTO.setProducto(producto);
+        ventaDTO.setImporte(BigDecimal.valueOf(producto.getCostoPack()));
         return new ResponseEntity<>(ventaServicio.guardar(ventaDTO), HttpStatus.CREATED);
     }
     

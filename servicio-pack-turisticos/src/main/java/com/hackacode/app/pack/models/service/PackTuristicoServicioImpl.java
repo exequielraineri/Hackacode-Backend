@@ -59,6 +59,7 @@ public class PackTuristicoServicioImpl implements IPackTuristicoServicio {
     @Transactional
     public PackTuristicoDTO guardar(PackTuristicoDTO packDto) {
         PackTuristico pack = modelMapper.map(packDto, PackTuristico.class);
+        pack.setServicios(new ArrayList<>());
         pack.setFechaRegistro(new Date());
         pack = packTuristicoDao.save(pack);
         return modelMapper.map(pack, PackTuristicoDTO.class);

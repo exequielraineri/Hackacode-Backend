@@ -1,9 +1,6 @@
 package com.hackacode.commons.entity.models.entity.dto;
 
-import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 
 public class EmpleadoDTO extends ClienteDTO {

@@ -36,12 +36,10 @@ public class Cliente {
     private String nombre;
 
     private String apellido;
+    
+    private String direccion;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "direccion_id")
-    private Direccion direccion;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String dni;
 
     @Column(name = "fecha_nac")

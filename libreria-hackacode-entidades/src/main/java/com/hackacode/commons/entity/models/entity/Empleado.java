@@ -13,7 +13,7 @@ public class Empleado extends Cliente {
     private String cargo;
     private Double sueldo;
 
-    public Empleado(String cargo, Double sueldo, Long id, String nombre, String apellido, Direccion direccion, String dni, Date fechaNac, String nacionalidad, Long celular, String email, Date fechaRegistro) {
+    public Empleado(String cargo, Double sueldo, Long id, String nombre, String apellido, String direccion, String dni, Date fechaNac, String nacionalidad, Long celular, String email, Date fechaRegistro) {
         super(id, nombre, apellido, direccion, dni, fechaNac, nacionalidad, celular, email, fechaRegistro);
         this.cargo = cargo;
         this.sueldo = sueldo;

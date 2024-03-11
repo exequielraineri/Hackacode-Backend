@@ -13,7 +13,7 @@ public class ClienteDTO {
     private Long id;
     private String nombre;
     private String apellido;
-    private DireccionDTO direccion;
+    private String direccion;
     private String dni;
     private Date fechaNac;
     private String nacionalidad;
