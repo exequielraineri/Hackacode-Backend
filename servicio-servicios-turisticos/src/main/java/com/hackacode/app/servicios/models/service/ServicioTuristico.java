@@ -62,15 +62,15 @@ public class ServicioTuristico implements InterfazServicio<ServicioDTO> {
     }
 
     @Transactional(readOnly = true)
-    public List<?> serviciosMasVendidos() {
+    public List<Map<String, Object>> serviciosMasVendidos() {
 
         List<List<String>> serviciosMasVendidos = servicioDao.serviciosMasVendidos();
         Map<String, Object> servicioMap;
         List<Map<String, Object>> responseServicio = new ArrayList<>();
-        for (List<String> servicio : serviciosMasVendidos) {
+        for (List<String> campos : serviciosMasVendidos) {
             servicioMap = new HashMap();
-            servicioMap.put("servicio", servicio.get(0).toString());
-            servicioMap.put("cantidad_ventas", servicio.get(1).toString());
+            servicioMap.put("servicio", campos.get(0).toString());
+            servicioMap.put("cantidad_ventas", campos.get(1).toString());
 
             responseServicio.add(servicioMap);
         }

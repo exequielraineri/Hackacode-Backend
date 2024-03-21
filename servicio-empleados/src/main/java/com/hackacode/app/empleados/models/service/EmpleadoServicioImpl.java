@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
+public class EmpleadoServicioImpl implements IEmpleadoServicio {
     
     @Autowired
     private IEmpleadoDao empleadoDao;
@@ -57,6 +57,13 @@ public class EmpleadoServicioImpl implements InterfazServicio<EmpleadoDTO> {
     @Transactional
     public void eliminarPorId(Long id) {
         empleadoDao.deleteById(id);
+    }
+    
+    
+    @Override
+    public EmpleadoDTO login(String email,String password){
+        Empleado empleadoBD = empleadoDao.empleadoPorEmailYPassword(email, password);
+        return modelMapper.map(empleadoBD, EmpleadoDTO.class);
     }
     
 }

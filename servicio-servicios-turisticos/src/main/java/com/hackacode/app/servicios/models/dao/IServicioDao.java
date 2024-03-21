@@ -15,15 +15,9 @@ public interface IServicioDao extends CrudRepository<Servicio, Long> {
      * @return
      */
     @Query(value = """
-           SELECT s.id, COUNT(*) AS total_ventas
-           	FROM ventas v
-                    JOIN pack_servicio p
-                        ON v.producto_id = p.pack_id
-                            JOIN servicios s
-                                ON p.servicio_id= s.id
-                                    GROUP BY s.id ORDER BY total_ventas DESC LIMIT 5;
-           """,
-            nativeQuery = true)
+                   select ps.servicio_id, count(*) from ventas as v
+                   	join pack_servicio as ps on v.producto_id=ps.pack_id group by ps.servicio_id;
+           """, nativeQuery = true)
     List<List<String>> serviciosMasVendidos();
 
 }

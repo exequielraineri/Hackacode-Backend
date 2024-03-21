@@ -1,5 +1,6 @@
 package com.hackacode.app.empleados.controllers;
 
+import com.hackacode.app.empleados.models.service.IEmpleadoServicio;
 import com.hackacode.commons.entity.models.entity.dto.EmpleadoDTO;
 import com.hackacode.commons.entity.util.InterfazServicio;
 import java.util.HashMap;
@@ -16,13 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EmpleadoController {
 
     @Autowired
-    private InterfazServicio<EmpleadoDTO> empleadoServicio;
+    private IEmpleadoServicio empleadoServicio;
+    
     @GetMapping("/")
     public List<EmpleadoDTO> listar() {
         return empleadoServicio.listar();
@@ -94,6 +97,17 @@ public class EmpleadoController {
             response.put("mensaje", "Existen elementos unicos que no pueden duplicarse");
             response.put("error", e.getCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+    }
+    
+    
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestParam(name = "email", required = true) String email, @RequestParam(name = "password", required = true) String password){
+        EmpleadoDTO empleadoDto = empleadoServicio.login(email, password);
+        if (empleadoDto!=null) {
+            return new ResponseEntity<>(empleadoDto,HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(empleadoDto,HttpStatus.UNAUTHORIZED);
         }
     }
 
